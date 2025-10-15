@@ -25,6 +25,35 @@ Extract from the data below two data sets in long form `deaths` and
 `returns`
 
 ``` r
+library(tidyverse)
+```
+
+    ## Warning: package 'tidyverse' was built under R version 4.4.3
+
+    ## Warning: package 'ggplot2' was built under R version 4.4.3
+
+    ## Warning: package 'tidyr' was built under R version 4.4.3
+
+    ## Warning: package 'purrr' was built under R version 4.4.3
+
+    ## Warning: package 'dplyr' was built under R version 4.4.3
+
+    ## Warning: package 'forcats' was built under R version 4.4.3
+
+    ## Warning: package 'lubridate' was built under R version 4.4.3
+
+    ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+    ## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+    ## ✔ forcats   1.0.1     ✔ stringr   1.5.1
+    ## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
+    ## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+    ## ✔ purrr     1.1.0     
+    ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ✖ dplyr::filter() masks stats::filter()
+    ## ✖ dplyr::lag()    masks stats::lag()
+    ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+
+``` r
 av <- read.csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/avengers/avengers.csv", stringsAsFactors = FALSE)
 head(av)
 ```
@@ -76,6 +105,27 @@ Similarly, deal with the returns of characters.
 Based on these datasets calculate the average number of deaths an
 Avenger suffers.
 
+``` r
+returns <- av %>%
+  select(Name.Alias, matches("^Return\\d+$")) %>%
+  pivot_longer(
+    cols = matches("^Return\\d+$"),
+    names_to = "Time",
+    values_to = "Return"
+  ) %>%
+  mutate(
+    Time = parse_number(Time),
+    Return = case_when(
+      is.na(Return) ~ "",
+      str_trim(Return) == "" ~ "",
+      TRUE ~ tolower(Return)
+    )
+  )
+
+
+View(returns)
+```
+
 ## Individually
 
 For each team member, copy this part of the report.
@@ -89,9 +139,10 @@ possible.
 
 > Quote the statement you are planning to fact-check.
 
-Allison:
+Allison: “I counted 89 total deaths”
 
-Ivy:
+Ivy: “My analysis found that 69 had died at least one time after they
+joined the team.”
 
 Norah:
 
