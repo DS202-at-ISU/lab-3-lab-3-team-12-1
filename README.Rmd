@@ -25,7 +25,7 @@ Submit a link to your repository on Canvas (only one submission per team) to sig
 Extract from the data below two data sets in long form `deaths` and `returns`
 ```{r}
 library(tidyverse)
-library(readr)
+
 ```
 
 ```{r}
@@ -38,6 +38,28 @@ Get the data into a format where the five columns for Death[1-5] are replaced by
 Similarly, deal with the returns of characters.
 
 Based on these datasets calculate the average number of deaths an Avenger suffers. 
+```{r}
+returns <- av %>%
+  select(Name.Alias, matches("^Return\\d+$")) %>%
+  pivot_longer(
+    cols = matches("^Return\\d+$"),
+    names_to = "Time",
+    values_to = "Return"
+  ) %>%
+  mutate(
+    Time = parse_number(Time),
+    Return = case_when(
+      is.na(Return) ~ "",
+      str_trim(Return) == "" ~ "",
+      TRUE ~ tolower(Return)
+    )
+  )
+
+
+View(returns)
+
+```
+
 
 ## Individually
 
