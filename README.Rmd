@@ -40,21 +40,17 @@ Similarly, deal with the returns of characters.
 
 Based on these datasets calculate the average number of deaths an Avenger suffers. 
 ```{r}
-returns <- av %>%
-  select(Name.Alias, matches("^Return\\d+$")) %>%
+returns <- av |> 
+  select(Name.Alias, starts_with("Return")) |>
   pivot_longer(
-    cols = matches("^Return\\d+$"),
+    Return1:Return5,
     names_to = "Time",
-    values_to = "Return"
-  ) %>%
+    values_to = "Returned"
+  ) |>
   mutate(
-    Time = parse_number(Time),
-    Return = case_when(
-      is.na(Return) ~ "",
-      str_trim(Return) == "" ~ "",
-      TRUE ~ tolower(Return)
-    )
+    Time = parse_number(Time)
   )
+
 
 
 head(returns)
@@ -121,6 +117,6 @@ Upload your changes to the repository. Discuss and refine answers as a team.
 
 Allison:
 
-Ivy: 
+Ivy: Based on my analysis of the dataset, **64 Avengers** have died at least one time after joining the team. This number is slightly lower than the FiveThirtyEight claim of 69 deaths. The difference may be due to dataset updates or variations in how deaths were counted.
 
 Norah: 
