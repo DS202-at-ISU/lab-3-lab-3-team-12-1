@@ -23,6 +23,10 @@ Submit a link to your repository on Canvas (only one submission per team) to sig
 ## As a team
 
 Extract from the data below two data sets in long form `deaths` and `returns`
+```{r}
+library(tidyverse)
+library(readr)
+```
 
 ```{r}
 av <- read.csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/avengers/avengers.csv", stringsAsFactors = FALSE)
