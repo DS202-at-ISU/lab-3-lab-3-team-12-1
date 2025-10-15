@@ -59,7 +59,8 @@ returns <- av %>%
 
 head(returns)
 
-deaths <- av |> 
+deaths <- av |> select(Name.Alias,
+    starts_with("Death")) |>
   pivot_longer(
     Death1:Death5,
     names_to = "Time",

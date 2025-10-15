@@ -128,7 +128,8 @@ head(returns)
     ## 6 "Janet van Dyne"                  1 "yes"
 
 ``` r
-deaths <- av |> 
+deaths <- av |> select(Name.Alias,
+    starts_with("Death")) |>
   pivot_longer(
     Death1:Death5,
     names_to = "Time",
@@ -141,18 +142,15 @@ deaths <- av |>
 head(deaths)
 ```
 
-    ## # A tibble: 6 × 14
-    ##   URL                 Name.Alias Appearances Current. Gender Probationary.Introl
-    ##   <chr>               <chr>            <int> <chr>    <chr>  <chr>              
-    ## 1 http://marvel.wiki… "Henry Jo…        1269 YES      MALE   ""                 
-    ## 2 http://marvel.wiki… "Henry Jo…        1269 YES      MALE   ""                 
-    ## 3 http://marvel.wiki… "Henry Jo…        1269 YES      MALE   ""                 
-    ## 4 http://marvel.wiki… "Henry Jo…        1269 YES      MALE   ""                 
-    ## 5 http://marvel.wiki… "Henry Jo…        1269 YES      MALE   ""                 
-    ## 6 http://marvel.wiki… "Henry Jo…        1269 YES      MALE   ""                 
-    ## # ℹ 8 more variables: Full.Reserve.Avengers.Intro <chr>, Year <int>,
-    ## #   Years.since.joining <int>, Honorary <chr>, Return5 <chr>, Notes <chr>,
-    ## #   Time <dbl>, Died <chr>
+    ## # A tibble: 6 × 3
+    ##   Name.Alias                     Time Died 
+    ##   <chr>                         <dbl> <chr>
+    ## 1 "Henry Jonathan \"Hank\" Pym"     1 "YES"
+    ## 2 "Henry Jonathan \"Hank\" Pym"     2 ""   
+    ## 3 "Henry Jonathan \"Hank\" Pym"     3 ""   
+    ## 4 "Henry Jonathan \"Hank\" Pym"     4 ""   
+    ## 5 "Henry Jonathan \"Hank\" Pym"     5 ""   
+    ## 6 "Janet van Dyne"                  1 "YES"
 
 ## Individually
 
