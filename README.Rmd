@@ -45,7 +45,7 @@ Each team member picks one of the statements in the FiveThirtyEight [analysis](h
 
 > Quote the statement you are planning to fact-check.
 
-Allison: 
+Allison: "I counted 89 total deaths"
 
 Ivy: 
 
