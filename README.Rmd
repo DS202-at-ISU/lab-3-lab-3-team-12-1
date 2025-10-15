@@ -25,7 +25,8 @@ Submit a link to your repository on Canvas (only one submission per team) to sig
 Extract from the data below two data sets in long form `deaths` and `returns`
 ```{r}
 library(tidyverse)
-
+library(readr)
+library(dplyr)
 ```
 
 ```{r}
@@ -57,6 +58,18 @@ returns <- av %>%
 
 
 View(returns)
+
+deaths <- av |> 
+  pivot_longer(
+    Death1:Death5,
+    names_to = "Time",
+    values_to = "Died"
+  ) |>
+  mutate(
+    Time = parse_number(Time)
+  )
+
+View(deaths)
 
 ```
 
