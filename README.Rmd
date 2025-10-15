@@ -73,7 +73,7 @@ Each team member picks one of the statements in the FiveThirtyEight [analysis](h
 
 Allison: "I counted 89 total deaths"
 
-Ivy: 
+Ivy: "My analysis found that 69 had died at least one time after they joined the team."
 
 Norah: 
 
