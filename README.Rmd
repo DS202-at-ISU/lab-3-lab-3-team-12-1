@@ -97,6 +97,18 @@ Make sure to include the code to derive the (numeric) fact for the statement
 Allison: 
 
 Ivy: 
+```{r}
+died_once <- deaths %>%
+  mutate(died = Died == "YES") %>% 
+  group_by(Name.Alias) %>%
+  summarise(n_deaths = sum(died, na.rm = TRUE), .groups = "drop") %>%
+  summarise(n = sum(n_deaths >= 1))
+
+
+
+died_once
+```
+
 
 Norah: 
 
