@@ -57,9 +57,10 @@ returns <- av %>%
   )
 
 
-View(returns)
+head(returns)
 
-deaths <- av |> 
+deaths <- av |> select(Name.Alias,
+    starts_with("Death")) |>
   pivot_longer(
     Death1:Death5,
     names_to = "Time",
@@ -69,7 +70,7 @@ deaths <- av |>
     Time = parse_number(Time)
   )
 
-View(deaths)
+head(deaths)
 
 ```
 

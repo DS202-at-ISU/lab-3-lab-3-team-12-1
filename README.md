@@ -114,9 +114,22 @@ returns <- av %>%
   )
 
 
-View(returns)
+head(returns)
+```
 
-deaths <- av |> 
+    ## # A tibble: 6 × 3
+    ##   Name.Alias                     Time Return
+    ##   <chr>                         <dbl> <chr> 
+    ## 1 "Henry Jonathan \"Hank\" Pym"     1 "no"  
+    ## 2 "Henry Jonathan \"Hank\" Pym"     2 ""    
+    ## 3 "Henry Jonathan \"Hank\" Pym"     3 ""    
+    ## 4 "Henry Jonathan \"Hank\" Pym"     4 ""    
+    ## 5 "Henry Jonathan \"Hank\" Pym"     5 ""    
+    ## 6 "Janet van Dyne"                  1 "yes"
+
+``` r
+deaths <- av |> select(Name.Alias,
+    starts_with("Death")) |>
   pivot_longer(
     Death1:Death5,
     names_to = "Time",
@@ -126,8 +139,18 @@ deaths <- av |>
     Time = parse_number(Time)
   )
 
-View(deaths)
+head(deaths)
 ```
+
+    ## # A tibble: 6 × 3
+    ##   Name.Alias                     Time Died 
+    ##   <chr>                         <dbl> <chr>
+    ## 1 "Henry Jonathan \"Hank\" Pym"     1 "YES"
+    ## 2 "Henry Jonathan \"Hank\" Pym"     2 ""   
+    ## 3 "Henry Jonathan \"Hank\" Pym"     3 ""   
+    ## 4 "Henry Jonathan \"Hank\" Pym"     4 ""   
+    ## 5 "Henry Jonathan \"Hank\" Pym"     5 ""   
+    ## 6 "Janet van Dyne"                  1 "YES"
 
 ## Individually
 
