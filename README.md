@@ -1,4 +1,3 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/LsTaLPbx)
 
 <!-- README.md is generated from README.Rmd. Please edit the README.Rmd file -->
 
@@ -90,10 +89,22 @@ possible.
 
 > Quote the statement you are planning to fact-check.
 
+Allison:
+
+Ivy:
+
+Norah:
+
 ### Include the code
 
 Make sure to include the code to derive the (numeric) fact for the
 statement
+
+Allison:
+
+Ivy:
+
+Norah:
 
 ### Include your answer
 
@@ -102,3 +113,9 @@ fact-checking endeavor.
 
 Upload your changes to the repository. Discuss and refine answers as a
 team.
+
+Allison:
+
+Ivy:
+
+Norah:
