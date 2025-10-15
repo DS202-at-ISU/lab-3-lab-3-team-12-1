@@ -57,7 +57,7 @@ returns <- av %>%
   )
 
 
-View(returns)
+head(returns)
 
 deaths <- av |> 
   pivot_longer(
@@ -69,7 +69,7 @@ deaths <- av |>
     Time = parse_number(Time)
   )
 
-View(deaths)
+head(deaths)
 
 ```
 
