@@ -68,6 +68,16 @@ deaths <- av |> select(Name.Alias,
 
 head(deaths)
 
+
+totaldeaths = nrow(filter(deaths, Died=='YES'))
+#totaldeaths
+
+totalavengers = length(unique(deaths$Name.Alias))
+#totalavengers
+
+avg = totaldeaths/totalavengers
+avg
+
 ```
 
 

@@ -148,6 +148,19 @@ head(deaths)
     ## 5 "Henry Jonathan \"Hank\" Pym"     5 ""   
     ## 6 "Janet van Dyne"                  1 "YES"
 
+``` r
+totaldeaths = nrow(filter(deaths, Died=='YES'))
+#totaldeaths
+
+totalavengers = length(unique(deaths$Name.Alias))
+#totalavengers
+
+avg = totaldeaths/totalavengers
+avg
+```
+
+    ## [1] 0.5460123
+
 ## Individually
 
 For each team member, copy this part of the report.
