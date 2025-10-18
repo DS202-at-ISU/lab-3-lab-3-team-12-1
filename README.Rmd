@@ -85,7 +85,7 @@ Allison: "I counted 89 total deaths"
 
 Ivy: "My analysis found that 69 had died at least one time after they joined the team."
 
-Norah: 
+Norah: "on 57 occasions the individual made a comeback"
 
 ### Include the code
 
@@ -108,6 +108,16 @@ died_once
 
 
 Norah: 
+```{r}
+
+head(returns)
+
+comebacks <- count(returns, Returned=='YES')
+comebacks
+newcb <- filter(comebacks, comebacks$`Returned == "YES"`==TRUE)
+newcb
+
+```
 
 ### Include your answer
 
@@ -119,4 +129,4 @@ Allison:
 
 Ivy: Based on my analysis of the dataset, **64 Avengers** have died at least one time after joining the team. This number is slightly lower than the FiveThirtyEight claim of 69 deaths. The difference may be due to dataset updates or variations in how deaths were counted.
 
-Norah: 
+Norah: Based on the code that I used to analyze the returns dataset, there were in fact 57 times that an individual died and returned. This exactly matches the number of times that the article claims people returned from the dead.

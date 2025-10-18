@@ -97,35 +97,31 @@ Based on these datasets calculate the average number of deaths an
 Avenger suffers.
 
 ``` r
-returns <- av %>%
-  select(Name.Alias, matches("^Return\\d+$")) %>%
+returns <- av |> 
+  select(Name.Alias, starts_with("Return")) |>
   pivot_longer(
-    cols = matches("^Return\\d+$"),
+    Return1:Return5,
     names_to = "Time",
-    values_to = "Return"
-  ) %>%
+    values_to = "Returned"
+  ) |>
   mutate(
-    Time = parse_number(Time),
-    Return = case_when(
-      is.na(Return) ~ "",
-      str_trim(Return) == "" ~ "",
-      TRUE ~ tolower(Return)
-    )
+    Time = parse_number(Time)
   )
+
 
 
 head(returns)
 ```
 
     ## # A tibble: 6 × 3
-    ##   Name.Alias                     Time Return
-    ##   <chr>                         <dbl> <chr> 
-    ## 1 "Henry Jonathan \"Hank\" Pym"     1 "no"  
-    ## 2 "Henry Jonathan \"Hank\" Pym"     2 ""    
-    ## 3 "Henry Jonathan \"Hank\" Pym"     3 ""    
-    ## 4 "Henry Jonathan \"Hank\" Pym"     4 ""    
-    ## 5 "Henry Jonathan \"Hank\" Pym"     5 ""    
-    ## 6 "Janet van Dyne"                  1 "yes"
+    ##   Name.Alias                     Time Returned
+    ##   <chr>                         <dbl> <chr>   
+    ## 1 "Henry Jonathan \"Hank\" Pym"     1 "NO"    
+    ## 2 "Henry Jonathan \"Hank\" Pym"     2 ""      
+    ## 3 "Henry Jonathan \"Hank\" Pym"     3 ""      
+    ## 4 "Henry Jonathan \"Hank\" Pym"     4 ""      
+    ## 5 "Henry Jonathan \"Hank\" Pym"     5 ""      
+    ## 6 "Janet van Dyne"                  1 "YES"
 
 ``` r
 deaths <- av |> select(Name.Alias,
@@ -170,7 +166,7 @@ Allison: “I counted 89 total deaths”
 Ivy: “My analysis found that 69 had died at least one time after they
 joined the team.”
 
-Norah:
+Norah: “on 57 occasions the individual made a comeback”
 
 ### Include the code
 
@@ -181,7 +177,59 @@ Allison:
 
 Ivy:
 
+``` r
+died_once <- deaths %>%
+  mutate(died = Died == "YES") %>% 
+  group_by(Name.Alias) %>%
+  summarise(n_deaths = sum(died, na.rm = TRUE), .groups = "drop") %>%
+  summarise(n = sum(n_deaths >= 1))
+
+
+
+died_once
+```
+
+    ## # A tibble: 1 × 1
+    ##       n
+    ##   <int>
+    ## 1    64
+
 Norah:
+
+``` r
+head(returns)
+```
+
+    ## # A tibble: 6 × 3
+    ##   Name.Alias                     Time Returned
+    ##   <chr>                         <dbl> <chr>   
+    ## 1 "Henry Jonathan \"Hank\" Pym"     1 "NO"    
+    ## 2 "Henry Jonathan \"Hank\" Pym"     2 ""      
+    ## 3 "Henry Jonathan \"Hank\" Pym"     3 ""      
+    ## 4 "Henry Jonathan \"Hank\" Pym"     4 ""      
+    ## 5 "Henry Jonathan \"Hank\" Pym"     5 ""      
+    ## 6 "Janet van Dyne"                  1 "YES"
+
+``` r
+comebacks <- count(returns, Returned=='YES')
+comebacks
+```
+
+    ## # A tibble: 2 × 2
+    ##   `Returned == "YES"`     n
+    ##   <lgl>               <int>
+    ## 1 FALSE                 808
+    ## 2 TRUE                   57
+
+``` r
+newcb <- filter(comebacks, comebacks$`Returned == "YES"`==TRUE)
+newcb
+```
+
+    ## # A tibble: 1 × 2
+    ##   `Returned == "YES"`     n
+    ##   <lgl>               <int>
+    ## 1 TRUE                   57
 
 ### Include your answer
 
@@ -193,6 +241,12 @@ team.
 
 Allison:
 
-Ivy:
+Ivy: Based on my analysis of the dataset, **64 Avengers** have died at
+least one time after joining the team. This number is slightly lower
+than the FiveThirtyEight claim of 69 deaths. The difference may be due
+to dataset updates or variations in how deaths were counted.
 
-Norah:
+Norah: Based on the code that I used to analyze the returns dataset,
+there were in fact 57 times that an individual died and returned. This
+exactly matches the number of times that the article claims people
+returned from the dead.
