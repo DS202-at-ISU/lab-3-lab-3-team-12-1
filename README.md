@@ -31,9 +31,9 @@ library(tidyverse)
     ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
     ## ✔ dplyr     1.1.4     ✔ readr     2.1.5
     ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-    ## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+    ## ✔ ggplot2   3.5.2     ✔ tibble    3.3.0
     ## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-    ## ✔ purrr     1.0.4     
+    ## ✔ purrr     1.1.0     
     ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
     ## ✖ dplyr::filter() masks stats::filter()
     ## ✖ dplyr::lag()    masks stats::lag()
@@ -97,35 +97,31 @@ Based on these datasets calculate the average number of deaths an
 Avenger suffers.
 
 ``` r
-returns <- av %>%
-  select(Name.Alias, matches("^Return\\d+$")) %>%
+returns <- av |> 
+  select(Name.Alias, starts_with("Return")) |>
   pivot_longer(
-    cols = matches("^Return\\d+$"),
+    Return1:Return5,
     names_to = "Time",
-    values_to = "Return"
-  ) %>%
+    values_to = "Returned"
+  ) |>
   mutate(
-    Time = parse_number(Time),
-    Return = case_when(
-      is.na(Return) ~ "",
-      str_trim(Return) == "" ~ "",
-      TRUE ~ tolower(Return)
-    )
+    Time = parse_number(Time)
   )
+
 
 
 head(returns)
 ```
 
     ## # A tibble: 6 × 3
-    ##   Name.Alias                     Time Return
-    ##   <chr>                         <dbl> <chr> 
-    ## 1 "Henry Jonathan \"Hank\" Pym"     1 "no"  
-    ## 2 "Henry Jonathan \"Hank\" Pym"     2 ""    
-    ## 3 "Henry Jonathan \"Hank\" Pym"     3 ""    
-    ## 4 "Henry Jonathan \"Hank\" Pym"     4 ""    
-    ## 5 "Henry Jonathan \"Hank\" Pym"     5 ""    
-    ## 6 "Janet van Dyne"                  1 "yes"
+    ##   Name.Alias                     Time Returned
+    ##   <chr>                         <dbl> <chr>   
+    ## 1 "Henry Jonathan \"Hank\" Pym"     1 "NO"    
+    ## 2 "Henry Jonathan \"Hank\" Pym"     2 ""      
+    ## 3 "Henry Jonathan \"Hank\" Pym"     3 ""      
+    ## 4 "Henry Jonathan \"Hank\" Pym"     4 ""      
+    ## 5 "Henry Jonathan \"Hank\" Pym"     5 ""      
+    ## 6 "Janet van Dyne"                  1 "YES"
 
 ``` r
 deaths <- av |> select(Name.Alias,
@@ -181,6 +177,23 @@ Allison:
 
 Ivy:
 
+``` r
+died_once <- deaths %>%
+  mutate(died = Died == "YES") %>% 
+  group_by(Name.Alias) %>%
+  summarise(n_deaths = sum(died, na.rm = TRUE), .groups = "drop") %>%
+  summarise(n = sum(n_deaths >= 1))
+
+
+
+died_once
+```
+
+    ## # A tibble: 1 × 1
+    ##       n
+    ##   <int>
+    ## 1    64
+
 Norah:
 
 ### Include your answer
@@ -193,6 +206,9 @@ team.
 
 Allison:
 
-Ivy:
+Ivy: Based on my analysis of the dataset, **64 Avengers** have died at
+least one time after joining the team. This number is slightly lower
+than the FiveThirtyEight claim of 69 deaths. The difference may be due
+to dataset updates or variations in how deaths were counted.
 
 Norah:
