@@ -148,6 +148,19 @@ head(deaths)
     ## 5 "Henry Jonathan \"Hank\" Pym"     5 ""   
     ## 6 "Janet van Dyne"                  1 "YES"
 
+``` r
+totaldeaths = nrow(filter(deaths, Died=='YES'))
+#totaldeaths
+
+totalavengers = length(unique(deaths$Name.Alias))
+#totalavengers
+
+avg = totaldeaths/totalavengers
+avg
+```
+
+    ## [1] 0.5460123
+
 ## Individually
 
 For each team member, copy this part of the report.
@@ -166,7 +179,7 @@ Allison: “I counted 89 total deaths”
 Ivy: “My analysis found that 69 had died at least one time after they
 joined the team.”
 
-Norah:
+Norah: “on 57 occasions the individual made a comeback”
 
 ### Include the code
 
@@ -196,6 +209,41 @@ died_once
 
 Norah:
 
+``` r
+head(returns)
+```
+
+    ## # A tibble: 6 × 3
+    ##   Name.Alias                     Time Returned
+    ##   <chr>                         <dbl> <chr>   
+    ## 1 "Henry Jonathan \"Hank\" Pym"     1 "NO"    
+    ## 2 "Henry Jonathan \"Hank\" Pym"     2 ""      
+    ## 3 "Henry Jonathan \"Hank\" Pym"     3 ""      
+    ## 4 "Henry Jonathan \"Hank\" Pym"     4 ""      
+    ## 5 "Henry Jonathan \"Hank\" Pym"     5 ""      
+    ## 6 "Janet van Dyne"                  1 "YES"
+
+``` r
+comebacks <- count(returns, Returned=='YES')
+comebacks
+```
+
+    ## # A tibble: 2 × 2
+    ##   `Returned == "YES"`     n
+    ##   <lgl>               <int>
+    ## 1 FALSE                 808
+    ## 2 TRUE                   57
+
+``` r
+newcb <- filter(comebacks, comebacks$`Returned == "YES"`==TRUE)
+newcb
+```
+
+    ## # A tibble: 1 × 2
+    ##   `Returned == "YES"`     n
+    ##   <lgl>               <int>
+    ## 1 TRUE                   57
+
 ### Include your answer
 
 Include at least one sentence discussing the result of your
@@ -211,4 +259,7 @@ least one time after joining the team. This number is slightly lower
 than the FiveThirtyEight claim of 69 deaths. The difference may be due
 to dataset updates or variations in how deaths were counted.
 
-Norah:
+Norah: Based on the code that I used to analyze the returns dataset,
+there were in fact 57 times that an individual died and returned. This
+exactly matches the number of times that the article claims people
+returned from the dead.
