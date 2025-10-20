@@ -28,6 +28,7 @@ Extract from the data below two data sets in long form `deaths` and
 library(tidyverse)
 ```
 
+<<<<<<< HEAD
     ## Warning: package 'tidyverse' was built under R version 4.4.3
 
     ## Warning: package 'ggplot2' was built under R version 4.4.3
@@ -48,12 +49,28 @@ library(tidyverse)
     ## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
     ## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
     ## ✔ purrr     1.1.0     
+=======
+    ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+    ## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+    ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+    ## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+    ## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+    ## ✔ purrr     1.0.4     
+>>>>>>> 794c1a4beb00d2048b5e88604e70fbea0e1b6179
     ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
     ## ✖ dplyr::filter() masks stats::filter()
     ## ✖ dplyr::lag()    masks stats::lag()
     ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 
 ``` r
+<<<<<<< HEAD
+=======
+library(readr)
+library(dplyr)
+```
+
+``` r
+>>>>>>> 794c1a4beb00d2048b5e88604e70fbea0e1b6179
 av <- read.csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/avengers/avengers.csv", stringsAsFactors = FALSE)
 head(av)
 ```
@@ -124,6 +141,21 @@ returns <- av %>%
 
 
 View(returns)
+<<<<<<< HEAD
+=======
+
+deaths <- av |> 
+  pivot_longer(
+    Death1:Death5,
+    names_to = "Time",
+    values_to = "Died"
+  ) |>
+  mutate(
+    Time = parse_number(Time)
+  )
+
+View(deaths)
+>>>>>>> 794c1a4beb00d2048b5e88604e70fbea0e1b6179
 ```
 
 ## Individually
