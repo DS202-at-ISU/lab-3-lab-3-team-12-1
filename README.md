@@ -28,24 +28,10 @@ Extract from the data below two data sets in long form `deaths` and
 library(tidyverse)
 ```
 
-    ## Warning: package 'tidyverse' was built under R version 4.4.3
-
-    ## Warning: package 'ggplot2' was built under R version 4.4.3
-
-    ## Warning: package 'tidyr' was built under R version 4.4.3
-
-    ## Warning: package 'purrr' was built under R version 4.4.3
-
-    ## Warning: package 'dplyr' was built under R version 4.4.3
-
-    ## Warning: package 'forcats' was built under R version 4.4.3
-
-    ## Warning: package 'lubridate' was built under R version 4.4.3
-
     ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
     ## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-    ## ✔ forcats   1.0.1     ✔ stringr   1.5.1
-    ## ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
+    ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+    ## ✔ ggplot2   3.5.2     ✔ tibble    3.3.0
     ## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
     ## ✔ purrr     1.1.0     
     ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
@@ -202,6 +188,15 @@ statement
 
 Allison:
 
+``` r
+death_cols <- c("Death1", "Death2", "Death3", "Death4", "Death5")
+
+total_deaths <- sum(av[death_cols] == "YES", na.rm = TRUE)
+total_deaths
+```
+
+    ## [1] 89
+
 Ivy:
 
 ``` r
@@ -266,7 +261,10 @@ fact-checking endeavor.
 Upload your changes to the repository. Discuss and refine answers as a
 team.
 
-Allison:
+Allison: Based on the code I used to analyze the data set, the author of
+the article was correct in saying that there was 89 total deaths. The
+sentence “I counted 89 total deaths” was proven true by the analysis I
+did.
 
 Ivy: Based on my analysis of the dataset, **64 Avengers** have died at
 least one time after joining the team. This number is slightly lower
