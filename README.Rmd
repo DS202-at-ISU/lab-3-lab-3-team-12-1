@@ -40,26 +40,23 @@ Similarly, deal with the returns of characters.
 
 Based on these datasets calculate the average number of deaths an Avenger suffers. 
 ```{r}
-returns <- av %>%
-  select(Name.Alias, matches("^Return\\d+$")) %>%
+returns <- av |> 
+  select(Name.Alias, starts_with("Return")) |>
   pivot_longer(
-    cols = matches("^Return\\d+$"),
+    Return1:Return5,
     names_to = "Time",
-    values_to = "Return"
-  ) %>%
+    values_to = "Returned"
+  ) |>
   mutate(
-    Time = parse_number(Time),
-    Return = case_when(
-      is.na(Return) ~ "",
-      str_trim(Return) == "" ~ "",
-      TRUE ~ tolower(Return)
-    )
+    Time = parse_number(Time)
   )
 
 
-View(returns)
 
-deaths <- av |> 
+head(returns)
+
+deaths <- av |> select(Name.Alias,
+    starts_with("Death")) |>
   pivot_longer(
     Death1:Death5,
     names_to = "Time",
@@ -69,7 +66,17 @@ deaths <- av |>
     Time = parse_number(Time)
   )
 
-View(deaths)
+head(deaths)
+
+
+totaldeaths = nrow(filter(deaths, Died=='YES'))
+#totaldeaths
+
+totalavengers = length(unique(deaths$Name.Alias))
+#totalavengers
+
+avg = totaldeaths/totalavengers
+avg
 
 ```
 
@@ -88,7 +95,7 @@ Allison: "I counted 89 total deaths"
 
 Ivy: "My analysis found that 69 had died at least one time after they joined the team."
 
-Norah: 
+Norah: "on 57 occasions the individual made a comeback"
 
 ### Include the code
 
@@ -97,8 +104,30 @@ Make sure to include the code to derive the (numeric) fact for the statement
 Allison: 
 
 Ivy: 
+```{r}
+died_once <- deaths %>%
+  mutate(died = Died == "YES") %>% 
+  group_by(Name.Alias) %>%
+  summarise(n_deaths = sum(died, na.rm = TRUE), .groups = "drop") %>%
+  summarise(n = sum(n_deaths >= 1))
+
+
+
+died_once
+```
+
 
 Norah: 
+```{r}
+
+head(returns)
+
+comebacks <- count(returns, Returned=='YES')
+comebacks
+newcb <- filter(comebacks, comebacks$`Returned == "YES"`==TRUE)
+newcb
+
+```
 
 ### Include your answer
 
@@ -108,6 +137,6 @@ Upload your changes to the repository. Discuss and refine answers as a team.
 
 Allison:
 
-Ivy: 
+Ivy: Based on my analysis of the dataset, **64 Avengers** have died at least one time after joining the team. This number is slightly lower than the FiveThirtyEight claim of 69 deaths. The difference may be due to dataset updates or variations in how deaths were counted.
 
-Norah: 
+Norah: Based on the code that I used to analyze the returns dataset, there were in fact 57 times that an individual died and returned. This exactly matches the number of times that the article claims people returned from the dead.
